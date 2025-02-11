@@ -64,15 +64,14 @@ const findStudent = async (item: StudentList) => {
     await useStudentsList(item)
     await getStudentBio(item)
 }
-
-
-
-
-//======= Fetch
 const getStudentsList = async () => {
     const { storage } = await useStudentsList()
     studentList.value = storage
 }
+
+
+
+//======= Fetch
 const getStudentBio = async (item: StudentList) => {
     _loadingBio.value = true
     const { data, success } = await studentService.getBio(item.id)

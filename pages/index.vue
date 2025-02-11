@@ -63,15 +63,15 @@ const findStudent = async (item: StudentList) => {
     await getLatestPlan(item)
     await getLatestNote(item)
 }
+const getStudentsList = async () => {
+    const { storage } = await useStudentsList()
+    studentList.value = storage
+}
 
 
 
 
 //======= Fetch
-const getStudentsList = async () => {
-    const { storage } = await useStudentsList()
-    studentList.value = storage
-}
 const getStudent = async (item: StudentList) => {
     _loadingStudent.value = true
 
@@ -79,7 +79,7 @@ const getStudent = async (item: StudentList) => {
     if (success) {
         _loadingStudent.value = false
 
-        if (data.student) {
+        if (!isEmpty(data.student)) {
             student.value = data.student
         }
     }
@@ -91,7 +91,7 @@ const getLatestPlan = async (item: StudentList) => {
     if (success) {
         _loadingPlan.value = false
 
-        if (data.plan) {
+        if (!isEmpty(data.plan)) {
             studentLatestPlan.value = data.plan
         }
     }
@@ -103,7 +103,7 @@ const getLatestNote = async (item: StudentList) => {
     if (success) {
         _loadingNote.value = false
 
-        if (data.note) {
+        if (!isEmpty(data.note)) {
             studentLatestNote.value = data.note
         }
     }
@@ -117,7 +117,7 @@ onBeforeMount(async () => {
     const { selected } = await useStudentsList()
 
     const firstStudent = selected || studentList.value[0]
-    if (firstStudent) {
+    if (!isEmpty(firstStudent)) {
         findStudent(firstStudent)
     }
 })

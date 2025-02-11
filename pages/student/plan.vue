@@ -2,6 +2,7 @@
 
 
 //======= Variables
+const _loadingStudent: Ref<boolean> = ref(false)
 const _loadingPlan: Ref<boolean> = ref(false)
 const _loadingPlans: Ref<boolean> = ref(false)
 
@@ -27,44 +28,78 @@ const studentPlanDetails: Ref<PlanDetails[]> = ref([])
 
 
 //======= Local Method
-const findStudent = async (item: StudentList) => {
-    await useStudentsList(item)
-
+const _resetVariables = () => {
+    student.value = {
+        id: 0,
+        name: '-',
+        nickname: '-',
+        age: 0,
+        photo: null
+    }
     studentPlan.value = {
         id: 0,
         title: '-',
         plan_details: [],
         updated_at: '_'
     }
+    studentPlans.value = []
+    studentPlanDetails.value = []
+
+}
+const findStudent = async (item: StudentList) => {
+    _resetVariables()
+
+    await useStudentsList(item)
     await getStudent(item)
     await getPlans(item)
+}
+const getStudentsLite = async () => {
+    const { storage } = await useStudentsList()
+    studentList.value = storage
 }
 
 
 
 
 //======= Fetch
-const getStudentsLite = async () => {
-    const { storage } = await useStudentsList()
-    studentList.value = storage
-}
 const getStudent = async (item: StudentList) => {
+    _loadingStudent.value = true
+
     const { data, success } = await studentService.show(item.id)
     if (success) {
-        student.value = data.student
+        _loadingStudent.value = false
+
+        if (!isEmpty(data.student)) {
+            student.value = data.student
+        }
     }
 }
 const getPlans = async (item: StudentList) => {
+    _loadingPlans.value = true
+
     const { data, success } = await studentService.getPlans(item.id)
     if (success) {
-        studentPlans.value = data.plans
+        _loadingPlans.value = false
+
+        if (!isEmpty(data.plans)) {
+            studentPlans.value = data.plans
+        }
     }
 }
 const getPlan = async (item: Plan) => {
+    _loadingPlan.value = true
+
     const { data, success } = await studentService.getPlan(student.value.id, item.id)
     if (success) {
-        studentPlan.value = data.plan
-        studentPlanDetails.value = data.plan.plan_details
+        _loadingPlan.value = false
+
+        if (!isEmpty(data.plan)) {
+            studentPlan.value = data.plan
+
+            if (!isEmpty(data.plan.plan_details)) {
+                studentPlanDetails.value = data.plan.plan_details
+            }
+        }
     }
 }
 

@@ -63,15 +63,15 @@ const findStudent = async (item: StudentList) => {
     await getStudent(item)
     await getNotes(item)
 }
+const getStudentsList = async () => {
+    const { storage } = await useStudentsList()
+    studentList.value = storage
+}
 
 
 
 
 //======= Fetch
-const getStudentsList = async () => {
-    const { storage } = await useStudentsList()
-    studentList.value = storage
-}
 const getStudent = async (item: StudentList) => {
     _loadingStudent.value = true
     const { data, success } = await studentService.show(item.id)

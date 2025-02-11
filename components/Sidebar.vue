@@ -120,8 +120,7 @@ onBeforeMount(() => {
                     </NuxtLink>
                 </li>
                 <li>
-                    <NuxtLink to="/student" class="nav-link"
-                        :class="{ 'bg-secondary': _isActiveRoute('student-index') }">
+                    <NuxtLink to="/student" class="nav-link" :class="{ 'bg-secondary': _isActiveRoute('student') }">
                         <Icon name="tabler:users" class="text-white" />
                         Biodata Santri
                     </NuxtLink>
