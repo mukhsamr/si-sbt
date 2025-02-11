@@ -113,7 +113,7 @@ onMounted(async () => {
     const { selected } = await useStudentsList()
 
     if (!isEmpty(selected)) {
-        findStudent(selected)
+        await findStudent(selected)
     }
 })
 

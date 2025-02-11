@@ -118,7 +118,7 @@ onBeforeMount(async () => {
 
     const firstStudent = selected || studentList.value[0]
     if (!isEmpty(firstStudent)) {
-        findStudent(firstStudent)
+        await findStudent(firstStudent)
     }
 })
 
