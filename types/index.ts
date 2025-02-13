@@ -33,16 +33,9 @@ declare global {
     interface Plan {
         id: number
         title: string
+        pdf: string | undefined
         count_plan?: number
-        plan_details?: PlanDetails[]
         created_at?: string
-        updated_at?: string
-    }
-
-    interface PlanDetails {
-        id: number
-        type: string
-        content: string
         updated_at?: string
     }
 

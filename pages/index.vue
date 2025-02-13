@@ -16,6 +16,7 @@ const student: Ref<Student> = ref({
 const studentLatestPlan: Ref<Plan> = ref({
     id: 0,
     title: '-',
+    pdf: '',
     count_plan: 0,
 })
 const studentLatestNote: Ref<Note> = ref({
@@ -44,6 +45,7 @@ const _resetVariables = () => {
     studentLatestPlan.value = {
         id: 0,
         title: '-',
+        pdf: '',
         count_plan: 0,
     }
     studentLatestNote.value = {
@@ -229,7 +231,7 @@ definePageMeta({
                     <p class="text-sm">{{ studentLatestPlan.title }}</p>
                     <p class="text-xs text-gray-400">{{ studentLatestPlan.count_plan }} Action Plan</p>
                 </div>
-                <Button size="sm" class="ml-auto" @click="navigateTo('/plan')">Lihat Detail</Button>
+                <Button size="sm" class="ml-auto" @click="navigateTo('/student/plan')">Lihat Detail</Button>
             </template>
         </div>
 
@@ -257,7 +259,7 @@ definePageMeta({
                     </p>
                     <span class="text-xs text-gray-400">Oleh: {{ studentLatestNote.author }}</span>
                 </div>
-                <Button size="sm" class="ml-auto" @click="navigateTo('/plan')">Lihat Detail</Button>
+                <Button size="sm" class="ml-auto" @click="navigateTo('/student/plan')">Lihat Detail</Button>
             </template>
         </div>
     </div>

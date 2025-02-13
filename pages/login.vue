@@ -12,7 +12,7 @@ const formLogin = reactive({
 
 //======= Local Methods
 const _setToken = (token: string) => {
-    const cookie = useCookie('token')
+    const cookie = useCookie('token', { maxAge: 60 * 60 * 24 * 30 })
     cookie.value = token
 }
 

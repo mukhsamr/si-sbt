@@ -138,7 +138,7 @@ onBeforeMount(() => {
 
             </ul>
 
-            <Button color="danger" icon="tabler:logout" @click="logout" class="mt-8">Logout</Button>
+            <Button color="danger" icon="tabler:logout" @click="logout" class="lg:hidden mt-8">Logout</Button>
         </nav>
     </div>
 

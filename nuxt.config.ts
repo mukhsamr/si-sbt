@@ -13,8 +13,7 @@ export default defineNuxtConfig({
   ],
   runtimeConfig: {
     public: {
-      apiApp: 'https://si-app.test/api/app',
-      apiBase: 'https://si-app.test/api/sbt',
+      apiBase: process.env.NUXT_PUBLIC_API_BASE,
     }
   },
 })

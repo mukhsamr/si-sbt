@@ -18,11 +18,9 @@ const studentPlans: Ref<Plan[]> = ref([])
 const studentPlan: Ref<Plan> = ref({
     id: 0,
     title: '-',
-    plan_details: [],
+    pdf: '',
     updated_at: '_'
 })
-const studentPlanDetails: Ref<PlanDetails[]> = ref([])
-
 
 
 
@@ -39,11 +37,10 @@ const _resetVariables = () => {
     studentPlan.value = {
         id: 0,
         title: '-',
-        plan_details: [],
+        pdf: '',
         updated_at: '_'
     }
     studentPlans.value = []
-    studentPlanDetails.value = []
 
 }
 const findStudent = async (item: StudentList) => {
@@ -95,10 +92,6 @@ const getPlan = async (item: Plan) => {
 
         if (!isEmpty(data.plan)) {
             studentPlan.value = data.plan
-
-            if (!isEmpty(data.plan.plan_details)) {
-                studentPlanDetails.value = data.plan.plan_details
-            }
         }
     }
 }
@@ -183,25 +176,34 @@ definePageMeta({
 
         </div>
         <div class="col-span-4">
-            <template v-for="planDetail in studentPlanDetails">
-                <div class="border rounded p-4">
-                    <template v-if="_loadingPlan">
-                        <div class="animate-pulse">
-                            <p class="h-4 bg-gray-200 rounded-full" style="width: 40%;"></p>
-
-                            <ul class="mt-5 space-y-3">
-                                <li class="w-full h-4 bg-gray-200 rounded-full"></li>
-                                <li class="w-full h-4 bg-gray-200 rounded-full"></li>
-                                <li class="w-full h-4 bg-gray-200 rounded-full"></li>
-                                <li class="w-full h-4 bg-gray-200 rounded-full"></li>
-                            </ul>
-                        </div>
-                    </template>
-                    <template v-else>
-                        <span>{{ planDetail.type }}</span>
-                        <p v-html="planDetail.content" class="reset"></p>
-                    </template>
+            <template v-if="_loadingPlan">
+                <div class="animate-pulse border p-8 rounded">
+                    <div class="bg-slate-50 border rounded p-8 flex flex-col items-center justify-center">
+                        <Icon name="tabler:loader" size="124" class="text-gray-400 mb-4 animate-spin" />
+                        <span class="text-gray-400">
+                            Mencari File.
+                        </span>
+                    </div>
                 </div>
+            </template>
+            <template v-else>
+                <template v-if="!studentPlan?.pdf">
+                    <div class="bg-slate-50 border rounded p-8 flex flex-col items-center justify-center">
+                        <span class="text-gray-600">
+                            Pilih Action Plan dari daftar.
+                        </span>
+                    </div>
+                </template>
+                <template v-else>
+                    <object :data="studentPlan.pdf" type="application/pdf" class="w-full aspect-[210/290]">
+                        <div class="bg-slate-50 border rounded p-8 flex flex-col items-center justify-center">
+                            <Icon name="tabler:file-off" size="124" class="text-gray-400 mb-4" />
+                            <span class="text-gray-400">
+                                File tidak ditemukan.
+                            </span>
+                        </div>
+                    </object>
+                </template>
             </template>
         </div>
     </div>
